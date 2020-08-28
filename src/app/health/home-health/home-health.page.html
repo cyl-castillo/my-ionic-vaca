@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Salud</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6" size-sm="4" size-lg="3">
+        <ion-card class="ion-no-margin">
+          <ion-card-content class="ion-padding" (click)="navigateTo('health/sickness')">
+            <ion-row>
+              <ion-col class="ion-text-center">
+                <ion-icon color="primary" large ios="ios-document" md="md-document"></ion-icon>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="ion-text-center">
+                <ion-label color="primary">Enfermedades</ion-label>
+              </ion-col>
+            </ion-row>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col size="6" size-sm="4" size-lg="3">
+        <ion-card class="ion-no-margin" (click)="navigateTo('health/physical-measurements')">
+          <ion-card-content class="ion-padding">
+            <ion-row>
+              <ion-col class="ion-text-center">
+                <ion-icon color="primary" large ios="ios-list-box" md="md-list-box"></ion-icon>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="ion-text-center">
+                <ion-label color="primary">Mediciones físicas</ion-label>
+              </ion-col>
+            </ion-row>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

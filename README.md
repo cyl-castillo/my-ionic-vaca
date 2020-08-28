@@ -1,2 +1,1 @@
-# my-ionic-vaca
-my-ionic-vaca
+# fincas-ionic

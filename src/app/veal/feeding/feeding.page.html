@@ -1,0 +1,108 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button size="large" defaultHref="/veal"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Lactancia</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-card class="ion-no-margin">
+          <!--ion-row *ngIf="cria != null">
+            <ion-col size="12" size-md="6">
+              <ion-item>
+                <ion-label  position="fixed" class='fixedLabel'>Número de la madre: </ion-label>
+                <ion-label>{{cria.madreId}}</ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label  position="fixed" class='fixedLabel'>Raza: </ion-label>
+                <ion-label>{{cria.raza}}</ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label  position="fixed" class='fixedLabel'>Sexo: </ion-label>
+                <ion-label *ngIf="cria.sexo == 1">Hembra</ion-label>
+                <ion-label *ngIf="cria.sexo == 2">Macho</ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label  position="fixed" class='fixedLabel'>Fecha de nacimiento: </ion-label>
+                <ion-label class="ion-text-left">{{cria.fecha | date: 'd/MMM'}}</ion-label>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12" size-md="6">
+              <ion-item>
+                <ion-label  position="fixed" class='fixedLabel' *ngIf="cantDias(cria.fecha)">Días de nacimiento: </ion-label>
+                <ion-label>{{ cantDia }}</ion-label>
+              </ion-item>
+            </ion-col>
+          </ion-row-->
+          <ion-row class="ion-justify-content-center">
+            <ion-col class="ion-align-self-center" size-md="6" size-xs="12">
+              <div class="ion-padding-top">
+                <ion-item>
+                  <ion-label position="floating">Número de la cría</ion-label>
+                  <ion-input [(ngModel)]="model.animal_codigo" (ngModelChange)="searchNumero(model.animal_codigo)" type="number" autocorrect="on" autofocus="on" clearInput="true" clearOnEdit="true" inputmode="text" placeholder="Número de la cría"></ion-input>
+                  <!--div *ngIf="animal_codigo" style="color:red;font-size: 80%;">Número de la cría es requerido</div-->
+                  <!--ion-icon (click)="searchData(animal.animal_codigo)" name="search" color="primary" slot="end"></ion-icon-->
+                  <ion-list *ngIf="filterCodigo">
+                    <ion-item *ngFor="let res of arrayResult" (click)="addCodigo(res.animal_codigo)">{{res.animal_codigo}}</ion-item>
+                  </ion-list>
+                </ion-item>
+              </div>
+              <div class="ion-padding-top">
+                <ion-item>
+                  <ion-label position="floating">Leche (L)</ion-label>
+                  <ion-input [(ngModel)]="model.leche" type="number" (ngModelChange)="searchLeche(model.leche)"></ion-input>
+                  <!--div *ngIf="leche" style="color:red;font-size: 80%;">Leche es requerido</div-->
+                  <ion-list *ngIf="filterLeche">
+                    <ion-item *ngFor="let res of arrayResult2" (click)="addLeche(res.leche)">{{res.leche}}</ion-item>
+                  </ion-list>
+                </ion-item>
+              </div>
+          </ion-col>
+            <ion-col class="ion-align-self-center" size-md="6" size-xs="12">
+              <div class="ion-padding-top">
+                <ion-item>
+                  <ion-label position="floating">Concentrado (Kgs)</ion-label>
+                  <ion-input [(ngModel)]="model.concentrado" type="number" (ngModelChange)="searchConcentrado(model.concentrado)"></ion-input>
+                  <!--div *ngIf="concentrado" style="color:red;font-size: 80%;">Concentrado es requerido</div-->
+                  <ion-list *ngIf="filterConcentrado">
+                    <ion-item *ngFor="let res of arrayResult3" (click)="addConcentrado(res.concentrado)">{{res.concentrado}}</ion-item>
+                  </ion-list>
+                </ion-item>
+              </div>
+              <div class="ion-padding-top">
+                <ion-item>
+                  <ion-label position="floating">Peso (Kgs)</ion-label>
+                  <ion-input [(ngModel)]="model.peso" type="number" (ngModelChange)="searchPeso(model.peso)"></ion-input>
+                  <!--div *ngIf="peso" style="color:red;font-size: 80%;">Peso es requerido</div-->
+                  <ion-list *ngIf="filterPeso">
+                    <ion-item *ngFor="let res of arrayResult1" (click)="addPeso(res.peso)">{{res.peso}}</ion-item>
+                  </ion-list>
+                </ion-item>
+              </div>
+              <div class="ion-padding-top">
+                <ion-item>
+                  <ion-label  position="floating">Fecha</ion-label>
+                  <!--ion-input [(ngModel)]="model.fecha" (click)="openDatePicker()"></ion-input-->
+                  <ion-datetime [(ngModel)]="model.fecha"  displayFormat="'DD-MM-YYYY"></ion-datetime>
+                </ion-item>
+              </div>
+            </ion-col>
+            <ion-col size="12">
+              <div class="ion-padding-bottom line-divider"></div>
+              <div class="ion-padding-top ion-text-center ion-text-md-end">
+                <ion-button (click)="saveData()" class="ion-hide-sm-down" [disabled]="animal_codigo || leche || concentrado || peso">Aceptar</ion-button>
+                <ion-button (click)="saveData()" class="ion-hide-md-up" expand="block" [disabled]="animal_codigo || leche || concentrado || peso">Aceptar</ion-button>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+</ion-content>

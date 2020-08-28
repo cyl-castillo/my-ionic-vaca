@@ -1,0 +1,196 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "~@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import '~@ionic/angular/css/display.css';
+
+/* Optional CSS utils that can be commented out */
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+
+/*ngx-datatables*/
+@import '~@swimlane/ngx-datatable/index.css';
+@import '~@swimlane/ngx-datatable/themes/material.scss';
+@import '~@swimlane/ngx-datatable/themes/bootstrap.scss';
+@import '~@swimlane/ngx-datatable/themes/dark.scss';
+@import '~@swimlane/ngx-datatable/assets/icons.css';
+
+//@import '../node_modules/@angular/material/prebuilt-themes/pink-bluegrey.css';
+//@import '../node_modules/@angular/material/theming';
+//
+//@include mat-core();
+
+
+/*rules globally*/
+ion-col{
+  height: 100%;
+}
+
+ion-col ion-icon{
+  font-size: 3rem;
+}
+
+ion-card{
+  border:1px solid var(--ion-color-primary);
+}
+
+.sc-ion-card-md-h{
+  background: #fcfcfc !important;
+
+}
+
+ion-grid{
+  background: #f0f0f0 !important;
+}
+
+ion-router-outlet ion-content {
+  --background:#f0f0f0;
+}
+
+.line-divider{
+  border-bottom: 1px solid var(--ion-color-secondary)
+}
+
+.ngx-datatable.material .datatable-header .datatable-header-cell{
+    font-size: 1rem;
+    font-weight: bold;
+    color: #1e2023;
+}
+
+.fixedLabel{
+  flex: 0 0 300px !important;
+  width: 300px !important;
+  font-weight: bold;
+}
+
+
+.datatable-footer {
+  background: white;
+  padding: 0 1em 0 1em;
+
+  .pager {
+    li {
+      padding: 0 1em !important;
+
+      a {
+        color: rgba(68, 68, 68, 1);
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+
+// Style rules for the footer pagination elements
+.datatable-icon-done-all:before {
+  content: ">>";
+}
+
+.datatable-icon-left:before {
+  content: "<";
+}
+
+.datatable-icon-right:before {
+  content: ">";
+}
+
+.datatable-icon-skip:before {
+  content: ">>";
+}
+
+.datatable-icon-prev:before {
+  content: "<<";
+}
+
+
+.li-ionic4-datePicker {
+  .modal-wrapper {
+    height: 75%;
+    width: 310px;
+    border-radius: 0px;
+    @media (min-width: 768px) {
+      width: 350px;
+      height: 65%;
+    }
+  }
+}
+
+.ionic_datepicker_modal_content ion-grid{
+  height: 100%;
+  background: white !important;
+}
+
+.button-inner{
+  width: 65% !important;
+}
+.ionic_datepicker_modal_content .dp-weeks-container .dp-days-list ion-col {
+  border-radius: 50% !important;
+  width: 50px;
+  height: 43px;
+}
+
+.dp-virual-scroller-show{
+  overflow: hidden;
+}
+
+.li-ionic4-datePicker {
+  .modal-wrapper {
+    height: 470px;
+    max-height: 100%;
+    width: 312px;
+  }
+}
+
+ion-back-button .button-inner{
+  width: 100% !important;
+}
+#content .item.sc-ion-label-md-h, #content .item .sc-ion-label-md-h{
+  white-space: normal !important;
+}
+
+#content ion-col ion-icon{
+  font-size: 2.2rem !important;
+}
+
+#btnFilter ion-icon{
+  font-size: 1.5rem;
+}
+
+/*.modal-wrapper {
+  --height: 76%;
+  --width:90%;
+  position: absolute;
+  top: 12%;
+  display: block;
+}*/
+
+.searchmodal .modal-wrapper {
+  --height: 56%;
+  --width:86%;
+  position: absolute;
+  top: 12%;
+  display: block;
+}
+
+
+.item-interactive.ion-valid{
+  --highlight-background: var(--ion-color-primary);
+
+}

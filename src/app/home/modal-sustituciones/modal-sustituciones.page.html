@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Sustituciones</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+<ion-list *ngIf="bitacora">
+  <ion-item *ngFor="let item of arrayBitaToday">
+    <ion-label>{{item.codigo_generado}}</ion-label>
+  </ion-item>
+</ion-list>
+<ion-item *ngIf="!bitacora">
+  <ion-label>No hay sustituciones de códigos en el día de Hoy</ion-label>
+</ion-item>
+</ion-content>

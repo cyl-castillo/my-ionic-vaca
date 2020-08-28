@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>RANGO TIPO EVENTO</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<ion-grid>
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-label position="floating">Celo desde</ion-label>
+        <ion-input [(ngModel)]="celos.min" type="number"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Servicio desde</ion-label>
+        <ion-input [(ngModel)]="servicios.min" type="number"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Palpación desde</ion-label>
+        <ion-input [(ngModel)]="palpacions.min" type="number"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Parto desde</ion-label>
+        <ion-input [(ngModel)]="partos.min" type="number"></ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col>
+      <ion-item>
+        <ion-label position="floating">Celo hasta</ion-label>
+        <ion-input [(ngModel)]="celos.max" type="number" (change)="celo()"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Servicio hasta</ion-label>
+        <ion-input [(ngModel)]="servicios.max" type="number" (change)="servicio()"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Palpación hasta</ion-label>
+        <ion-input [(ngModel)]="palpacions.max" type="number" (change)="palpacion()"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Parto hasta</ion-label>
+        <ion-input [(ngModel)]="partos.max" type="number" (change)="parto()"></ion-input>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+<div style="margin-top: -5px">
+  <ion-button expand="block" (click)="closeModal()">OK</ion-button>
+</div>
+</ion-content>

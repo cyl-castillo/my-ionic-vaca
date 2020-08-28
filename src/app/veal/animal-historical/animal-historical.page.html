@@ -1,0 +1,430 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/veal"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Histórico del animal</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+    <ion-label position="floating">Número del animal</ion-label>
+    <ion-input [(ngModel)]="animal_codigo" autocorrect="on" autofocus="on" maxlength="12" (ngModelChange)="searchData(animal_codigo)" clearInput="true" clearOnEdit="true" inputmode="text" required="true"></ion-input>
+    <ion-icon (click)="listar(animal_codigo)" name="search" color="primary" slot="end"></ion-icon>
+    <ion-list *ngIf="filter">
+      <ion-item *ngFor="let res of arrayResult" (click)="addCodigo(res)">{{res.animal_codigo}}</ion-item>
+    </ion-list>
+  </ion-item>
+  <ion-card *ngIf="historico">
+    <ion-item>
+      <ion-label>Número del animal: {{ animal_historico.animal_codigo}}</ion-label>
+    </ion-item>  
+    <ion-item>
+      <ion-label *ngIf="raza(animal_historico.razaId)">Raza: {{ razanombre }}</ion-label>
+    </ion-item>
+      <ion-item>
+        <ion-label class="ion-align-self-center" *ngIf="animal_historico.sexo == 'Macho'">Sexo: M</ion-label>
+        <ion-label class="ion-align-self-center" *ngIf="animal_historico.sexo == 'Hembra'">Sexo: H</ion-label>
+        <!--div style="display: flex;flex-direction: row;justify-content: center;">
+          <ion-label>Sexo: </ion-label>
+          <ion-icon class="ion-align-self-center" style="width: 25px;height: 25px;" *ngIf="sexo(animal_historico.sexo)" [name]="genero"></ion-icon>  
+        </div-->
+      </ion-item>
+      <ion-item>
+        <ion-label>Madre del animal: {{ animal_historico.madreId }}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Padre del animal: {{ animal_historico.padreId }}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Fecha de nacimiento: {{ animal_historico.fecha }}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Ultimo Estado: {{ ultimo_estado }}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Partos Vivos: {{ partosvivos }}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Partos Muertos: {{ partosmuertos }}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Partos Total: {{ partostotal }}</ion-label>
+      </ion-item>
+  </ion-card>
+  
+  <ion-card *ngIf="historico">
+    <ion-card-header (click)="lactanciaAccordion()">
+        <ion-item color="primary" style="display: flex;flex-direction: row;justify-content: center;">
+          <ion-label>Lactancia</ion-label>
+          <ion-label style="margin-left: 20px;">L(l)</ion-label>
+          <ion-label style="margin-left: 20px;"> C(kg)</ion-label>
+          <ion-label style="margin-left: 20px;">P(kg)</ion-label>
+          <ion-icon color="light" [name]="iconL" slot="end"></ion-icon>
+        </ion-item>
+    </ion-card-header>
+    <ion-card-content *ngIf="isLactanciaOpen">
+      <ion-item *ngFor="let item of rows">
+        <ion-grid>
+          <ion-row>
+              <ion-col size="6">
+                <ion-label>{{ item.fecha }}</ion-label>
+              </ion-col>
+              <ion-col size="2">
+                <ion-label>{{ item.leche }}L</ion-label>
+              </ion-col>
+              <ion-col size="2">
+                <ion-label>{{ item.concentrado }}Kg</ion-label>
+              </ion-col>
+              <ion-col size="2">
+                <ion-label>{{ item.peso }}Kg</ion-label>
+              </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+  <ion-card *ngIf="historico">
+    <ion-card-header (click)="eventosAccordion()">
+        <ion-item color="primary">
+          Eventos
+          <ion-icon color="light" [name]="iconE" slot="end"></ion-icon>
+        </ion-item>
+    </ion-card-header>
+    <ion-card-content *ngIf="iseventosOpen">
+      <ion-item *ngFor="let item of rows_evento">
+        <ion-grid>
+          <ion-row>
+              <ion-col size="5">
+                <ion-label>{{ item.fecha }}</ion-label>
+              </ion-col>
+              <ion-col size="7">
+                <ion-label>{{ item.tipo_evento }}</ion-label>
+              </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+  <ion-card *ngIf="historico">
+    <ion-card-header (click)="celosAccordion()">
+        <ion-item color="primary">
+          Celos
+          <ion-icon color="light" [name]="iconC" slot="end"></ion-icon>
+        </ion-item>
+    </ion-card-header>
+    <ion-card-content *ngIf="iscelosOpen">
+      <ion-item *ngFor="let item of rows_celos">
+        <ion-grid>
+          <ion-row>
+              <ion-col size="6">
+                <ion-label>{{ item.fecha }}</ion-label>
+              </ion-col>
+              <ion-col size="6">
+                <ion-icon class="ion-align-self-center" *ngIf="item.icon == 1" color="primary" style="width: 13px;height: 13px;" name="add"></ion-icon>
+                <ion-icon class="ion-align-self-center" *ngIf="item.icon == 0" color="danger" style="width: 13px;height: 13px;" name="remove"></ion-icon>  
+              </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+  <ion-card *ngIf="historico">
+    <ion-card-header (click)="palpacionAccordion()">
+        <ion-item color="primary">
+          Palpación
+          <ion-icon color="light" [name]="iconPL" slot="end"></ion-icon>
+        </ion-item>
+    </ion-card-header>
+    <ion-card-content *ngIf="isPalpacionOpen">
+      <ion-item *ngFor="let item of rows_palpacion">
+        <ion-grid>
+          <ion-row>
+              <ion-col size="6">
+                <ion-label>{{ item.fecha }}</ion-label>
+              </ion-col>
+              <ion-col size="6">
+                <ion-icon class="ion-align-self-center" *ngIf="item.icon == 1" color="primary" style="width: 13px;height: 13px;" name="add"></ion-icon>
+                <ion-icon class="ion-align-self-center" *ngIf="item.icon == 0" color="danger" style="width: 13px;height: 13px;" name="remove"></ion-icon>  
+              </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+  <ion-card *ngIf="historico">
+    <ion-card-header (click)="servicioAccordion()">
+        <ion-item color="primary">
+          Servicio
+          <ion-icon color="light" [name]="iconS" slot="end"></ion-icon>
+        </ion-item>
+    </ion-card-header>
+    <ion-card-content *ngIf="isservicioOpen">
+      <ion-item *ngFor="let item of rows_servicio">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="4">
+              <ion-label>{{ item.fecha }}</ion-label>
+            </ion-col>
+            <ion-col size="3">
+              <ion-label>{{ item.sexo }}</ion-label>
+            </ion-col>
+            <ion-col size="3">
+              <ion-label>{{ item.animal_inseminado }}</ion-label>
+            </ion-col>
+            <ion-col size="2">
+              <ion-icon class="ion-align-self-center" *ngIf="item.icon == 1" color="primary" style="width: 13px;height: 13px;" name="add"></ion-icon>
+              <ion-icon class="ion-align-self-center" *ngIf="item.icon == 0" color="danger" style="width: 13px;height: 13px;" name="remove"></ion-icon>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+  <ion-card *ngIf="historico">
+    <ion-card-header (click)="partoAccordion()">
+        <ion-item color="primary">
+          Parto
+          <ion-icon color="light" [name]="iconP" slot="end"></ion-icon>
+        </ion-item>
+    </ion-card-header>
+    <ion-card-content *ngIf="ispartoOpen">
+      <ion-item *ngFor="let item of rows_parto">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="6">
+              <ion-label>{{ item.fecha }}</ion-label>
+            </ion-col>
+            <ion-col size="2">
+              <ion-icon class="ion-align-self-center" style="width: 25px;height: 25px;" *ngIf="sexo(item.sexo)" [name]="genero"></ion-icon>
+            </ion-col>
+            <ion-col size="2">
+              <ion-label *ngIf="raza(item.razaId)">Raza:{{ razanombre }}</ion-label>
+            </ion-col>
+           <ion-col size="2">
+            <ion-icon class="ion-align-self-center" *ngIf="item.icon == 1" color="primary" style="width: 13px;height: 13px;" name="add"></ion-icon>
+            <ion-icon class="ion-align-self-center" *ngIf="item.icon == 0" color="danger" style="width: 13px;height: 13px;" name="remove"></ion-icon>
+           </ion-col>
+        </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+  <ion-card *ngIf="historico">
+    <ion-card-header (click)="lechesAccordion()">
+        <ion-item color="primary">
+          Leche
+          <ion-icon color="light" [name]="iconLe" slot="end"></ion-icon>
+        </ion-item>
+    </ion-card-header>
+    <ion-card-content *ngIf="islecheOpen">
+      <ion-item *ngFor="let item of rows_leche">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="6">
+              <ion-label>{{ item.fecha }}</ion-label>
+            </ion-col>
+            <ion-col size="6">
+              <ion-label>{{ item.peso }}</ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+  <ion-card *ngIf="historico">
+    <ion-card-header (click)="pesoAccordion()">
+        <ion-item color="primary">
+          Peso
+          <ion-icon color="light" [name]="iconPe" slot="end"></ion-icon>
+        </ion-item>
+    </ion-card-header>
+    <ion-card-content *ngIf="isPesoOpen">
+      <ion-item *ngFor="let item of rows_peso">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="6">
+              <ion-label>{{ item.fecha }}</ion-label>
+            </ion-col>
+            <ion-col size="6">
+              <ion-label>{{ item.peso }}</ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+  <ion-card *ngIf="historico">
+    <ion-card-header (click)="enfermedadAccordion()">
+        <ion-item color="primary">
+          Enfermedad
+          <ion-icon color="light" [name]="iconEn" slot="end"></ion-icon>
+        </ion-item>
+    </ion-card-header>
+    <ion-card-content *ngIf="isenfermedadOpen">
+      <ion-item *ngFor="let item of rows_enfermedad">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="6">
+               <ion-label>{{ item.fecha }}</ion-label>
+            </ion-col>
+            <ion-col size="6">
+              <ion-label>{{ item.nombre }}</ion-label>
+           </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="historico">
+    <ion-card-header (click)="medicionesAccordion()">
+        <ion-item color="primary">
+          Mediciones
+          <ion-icon color="light" [name]="iconM" slot="end"></ion-icon>
+        </ion-item>
+    </ion-card-header>
+    <ion-card-content *ngIf="ismedicionesOpen">
+      <ion-item *ngFor="let item of rows_mediciones">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="3">
+              <ion-label>{{ item.fecha }}</ion-label>
+            </ion-col>
+            <ion-col size="3">
+              <ion-label>{{ item.condicionId }}</ion-label>
+            </ion-col>
+            <ion-col size="3">
+              <ion-label>{{ item.locomocionId }}</ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+  <!--ion-card *ngIf="historico">
+    <ion-card-header (click)="estadoAccordion()">
+        <ion-item color="primary">
+          Estados
+          <ion-icon color="light" [name]="iconEs" slot="end"></ion-icon>
+        </ion-item>
+    </ion-card-header>
+    <ion-card-content *ngIf="isEstadoOpen">
+      <ion-item *ngFor="let item of rows_estado">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="6">
+              <ion-label>{{ item.fecha }}</ion-label>
+            </ion-col>
+            <ion-col size="6">
+              <ion-label>{{ item.nombre }}</ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-card-content>
+  </ion-card-->
+  <ion-card *ngIf="historico">
+    <ion-card-header (click)="ubicacionAccordion()">
+        <ion-item color="primary">
+          Ubicación
+          <ion-icon color="light" [name]="iconU" slot="end"></ion-icon>
+        </ion-item>
+    </ion-card-header>
+    <ion-card-content *ngIf="isUbicacionOpen">
+      <ion-item *ngFor="let item of rows_ubicacion">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="6">
+              <ion-label>{{ item.fecha }}</ion-label>
+            </ion-col>
+            <ion-col size="6">
+              <ion-label>{{ item.nombre }}</ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+  <!--ion-card *ngIf="historico">
+    <ion-card-header (click)="partosVivosAccordion()">
+        <ion-item color="primary">
+          Partos Vivos
+          <ion-icon color="light" [name]="iconPV" slot="end"></ion-icon>
+        </ion-item>
+    </ion-card-header>
+    <ion-card-content *ngIf="isPartosVivosOpen">
+      <ion-item *ngFor="let item of rows_parto_vivo">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="6">
+              <ion-label>{{ item.fecha }}</ion-label>
+            </ion-col>
+            <ion-col size="3">
+              <ion-label>{{ item.total }}</ion-label>
+            </ion-col>
+            <ion-col size="3">
+              <ion-icon class="ion-align-self-center" *ngIf="item.icon == 1" color="primary" style="width: 13px;height: 13px;" name="add"></ion-icon>
+              <ion-icon class="ion-align-self-center" *ngIf="item.icon == 0" color="danger" style="width: 13px;height: 13px;" name="remove"></ion-icon>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+  <ion-card *ngIf="historico">
+    <ion-card-header (click)="partosMuertosAccordion()">
+        <ion-item color="primary">
+          Partos Muertos
+          <ion-icon color="light" [name]="iconPM" slot="end"></ion-icon>
+        </ion-item>
+    </ion-card-header>
+    <ion-card-content *ngIf="isPartosMuertoOpen">
+      <ion-item *ngFor="let item of rows_parto_muerto">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="6">
+              <ion-label>{{ item.fecha }}</ion-label>
+            </ion-col>
+            <ion-col size="3">
+              <ion-label>{{ item.total }}</ion-label>
+            </ion-col>
+            <ion-col size="3">
+              <ion-icon class="ion-align-self-center" *ngIf="item.icon == 1" color="primary" style="width: 13px;height: 13px;" name="add"></ion-icon>
+              <ion-icon class="ion-align-self-center" *ngIf="item.icon == 0" color="danger" style="width: 13px;height: 13px;" name="remove"></ion-icon>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+
+
+  <ion-card *ngIf="historico">
+    <ion-card-header (click)="partosTotalAccordion()">
+        <ion-item color="primary">
+          Partos Total
+          <ion-icon color="light" [name]="iconPT" slot="end"></ion-icon>
+        </ion-item>
+    </ion-card-header>
+    <ion-card-content *ngIf="isPartosTotalOpen">
+      <ion-item *ngFor="let item of rows_parto_total">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="6">
+              <ion-label>{{ item.fecha }}</ion-label>
+            </ion-col>
+            <ion-col size="3">
+              <ion-label>{{ item.total }}</ion-label>
+            </ion-col>
+            <ion-col size="3">
+              <ion-icon class="ion-align-self-center" *ngIf="item.icon == 1" color="primary" style="width: 13px;height: 13px;" name="add"></ion-icon>
+              <ion-icon class="ion-align-self-center" *ngIf="item.icon == 0" color="danger" style="width: 13px;height: 13px;" name="remove"></ion-icon>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-card-content>
+  </ion-card-->
+</ion-content>

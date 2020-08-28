@@ -1,0 +1,58 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/control-farm"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Ventas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid class="ion-padding">
+    <ion-row class="ion-justify-content-center">
+      <ion-col class="ion-align-self-center" size-md="6" size-lg="5" size-xs="12">
+        <div class="ion-padding-top">
+          <ion-item>
+            <ion-label position="floating">Número del animal</ion-label>
+            <ion-input [(ngModel)]="model.animal_codigo" (ngModelChange)="searchData(model.animal_codigo)" type="number" autocorrect="on" autofocus="on" clearInput="true" clearOnEdit="true" inputmode="text" placeholder="Número del animal"></ion-input>
+            <!--div *ngIf="animal_codigo" style="color:red;font-size: 80%;">Número del animal es requerido</div-->
+            <!--ion-icon (click)="searchData(animal.animal_codigo)" name="search" color="primary" slot="end"></ion-icon-->
+             <ion-list *ngIf="filter">
+              <ion-item *ngFor="let res of arrayResult" (click)="addCodigo(res.animal_codigo)">{{res.animal_codigo}}</ion-item>
+            </ion-list>
+          </ion-item>
+        </div>
+        <div class="ion-padding-top">
+          <ion-item>
+            <ion-label position="floating">Clientes</ion-label>
+            <ion-select okText="Aceptar" cancelText="Cancelar" [(ngModel)]="model.cliente_codigo" (ngModelChange)="clientes($event)">
+              <ion-select-option *ngFor="let client of arrayClient" value="{{client.codigo}}">{{client.nombre}}</ion-select-option>
+            </ion-select>
+            <!--div *ngIf="requiredFinca1" style="color:red;font-size: 80%;">Clientes es requerido</div-->
+          </ion-item>
+        </div>
+        <div class="ion-padding-top">
+          <ion-item>
+
+            <ion-label position="floating">Motivos</ion-label>
+            <ion-select okText="Aceptar" cancelText="Cancelar" [(ngModel)]="model.motivoId" (ngModelChange)="motivo($event)">
+              <ion-select-option *ngFor="let motivo of arrayMotivos" value="{{motivo.idmotivo_venta}}">{{motivo.nombre}}</ion-select-option>
+            </ion-select>
+            <!--div *ngIf="requiredFinca" style="color:red;font-size: 80%;">Motivos es requerido</div-->
+          </ion-item>
+        </div>
+        <div class="ion-padding-top">
+          <ion-item>
+            <ion-label  position="floating">Fecha</ion-label>
+            <!--ion-input [(ngModel)]="model.fecha" (click)="openDatePicker()"></ion-input-->
+            <ion-datetime [(ngModel)]="model.fecha"  displayFormat="'DD-MM-YYYY"></ion-datetime>
+          </ion-item>
+        </div>
+        <div class="ion-padding-bottom line-divider"></div>
+        <div class="ion-padding-top">
+          <ion-button (click)="saveData()" expand="block" [disabled]="model.animal_codigo == null || model.cliente_codigo == null || model.motivoId == null || model.fecha == null">Aceptar</ion-button>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

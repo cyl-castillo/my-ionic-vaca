@@ -1,0 +1,51 @@
+<h2 (click)="toggleAccordion()">
+  {{ name }}
+  <span *ngIf="isMenuOpen"> <ion-icon name="remove"></ion-icon></span>
+  <span *ngIf="!isMenuOpen"><ion-icon name="add"></ion-icon></span>
+</h2>
+<div id="content" [ngClass]="this.isMenuOpen ? 'active' : 'inactive'">
+  <ion-grid>
+    <ion-row>
+      <ion-col size-sm="11" size-xs="10" *ngIf="showFieldNumber()">
+        <!--ion-item>
+          <ion-label position="floating">Número</ion-label>
+          <ion-input [(ngModel)]="model.number" type="number"></ion-input>
+        </ion-item-->
+      </ion-col>
+      <ion-col size-sm="11" size-xs="10" *ngIf="showFieldSelect()">
+          <ion-item>
+            <ion-label position="floating">Finca</ion-label>
+            <ion-select okText="Aceptar" cancelText="Cancelar" [(ngModel)]="model.idFarm" (ngModelChange)="selectFinca()">
+              <ion-select-option *ngFor="let farm of arrayFarm" value="{{farm.idfinca}}">{{farm.nombre}}</ion-select-option>
+            </ion-select>
+            <!--div *ngIf="requiredFinca" style="color:red;font-size: 80%;">Finca es requerido</div-->
+          </ion-item>
+      </ion-col>
+      <ion-col size-sm="11" size-xs="10">
+        <ion-item>
+          <ion-label position="floating">Nombre</ion-label>
+          <ion-input [(ngModel)]="model.name" type="text" (ngModelChange)="calcular(model.name)"></ion-input>
+          <!--div *ngIf="names" style="color:red;font-size: 80%;">Nombre es requerido</div-->
+        </ion-item>
+      </ion-col>
+      <ion-col class="ion-align-self-center" size-sm="1" size-xs="2">
+        <ion-icon (click)="broadcastAdd(name)" color="primary" *ngIf="!edit && names" name="add-circle"></ion-icon>
+        <ion-icon (click)="broadcastUpdate(name)" color="primary" *ngIf="edit && names" name="checkmark-circle"></ion-icon>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12" *ngIf="arrayList.length > 0">
+        <ion-item class="ion-justify-content-center ion-align-items-center"  *ngFor="let item of arrayList">
+          <ion-label class="ion-align-self-center" *ngIf="showTablaAnother()">{{item.nombre}}</ion-label>
+          <ion-label #farmElement class="ion-align-self-center" *ngIf="showTabla(item.fincaId)">{{ finca }}-{{item.nombre}}</ion-label>
+          <!--ion-label class="ion-align-self-center" *ngIf="showTablaA(item.fincaId)">{{ fincaA }}-{{item.nombre}}</ion-label-->
+          <div class="ion-float-end">
+            <ion-icon  *ngIf="showTabla(item.fincaId)" (click)="favorites(item)" color="light" name="{{item.favorite}}"></ion-icon>
+            <ion-icon (click)="loadcastUpdate(item)" color="light" name="create"></ion-icon>
+            <ion-icon  (click)="presentAlertConfirm(item)" color="danger" name="trash"></ion-icon>
+          </div>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</div>

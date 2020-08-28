@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>atender</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+    <ion-button expand="block" style="width:120px;height:50px;margin-left: 270px;" (click)="atender()">Atender</ion-button>
+  </ion-item>
+  <ion-item>
+    <ion-button expand="block" style="margin-left: 270px;width:120px;" (click)="delete(codigo)">Borrar</ion-button>
+  </ion-item>
+  <ion-item>
+    <ion-button expand="block" style="margin-left: 270px;width:120px;" (click)="openModalWithData()">Editar</ion-button>
+  </ion-item>
+</ion-content>

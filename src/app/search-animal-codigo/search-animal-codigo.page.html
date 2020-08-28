@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Busqueda Código Animal</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+    <ion-label *ngIf="animal_codigo or animal_cria">Animal Código</ion-label>
+  </ion-item>
+<ion-list *ngIf="animal_codigo">
+<ion-item *ngFor="let item of arrayAnimal;">
+  <ion-label (click)="codigo(item.animal_codigo)">{{item.animal_codigo}}</ion-label>
+</ion-item>
+</ion-list>
+<ion-list *ngIf="animal_cria">
+  <ion-item *ngFor="let item of arrayCria;">
+    <ion-label (click)="codigocria(item)">{{item.animal_codigo}}</ion-label>
+  </ion-item>
+  </ion-list>
+</ion-content>

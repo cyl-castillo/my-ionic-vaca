@@ -1,0 +1,85 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/reproduction"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Partos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid class="ion-padding">
+    <ion-row class="ion-justify-content-center">
+      <ion-col class="ion-align-self-center" size-md="6" size-lg="5" size-xs="12">
+        <div class="ion-padding-top">
+          <ion-item>
+            <ion-label position="floating">Número de la madre</ion-label>
+            <ion-input [(ngModel)]="model.codigoMadre" type="number" autocorrect="on" autofocus="on" clearInput="true" clearOnEdit="true" inputmode="text" readonly="true"></ion-input>
+            <!--ion-icon (click)="searchData(animal.animal_codigo)" name="search" color="primary" slot="end"></ion-icon-->
+            <ion-list *ngIf="filter">
+              <ion-item *ngFor="let res of arrayResult" (click)="addCodigo(res.animal_codigo)">{{res.animal_codigo}}</ion-item>
+            </ion-list>
+          </ion-item>
+        </div>
+        <div class="ion-padding-top">
+          <ion-item>
+            <ion-label position="floating">Número de la cria</ion-label>
+            <ion-input [(ngModel)]="model.codigoCria" type="number" (ngModelChange)="searchData(model.codigoCria)"></ion-input>
+            <ion-list *ngIf="filter">
+              <ion-item *ngFor="let res of arrayResult" (click)="addCodigo(res.animal_codigo)">{{res.animal_codigo}}</ion-item>
+            </ion-list>
+            <!--div *ngIf="codigoCria" style="color:red;font-size: 80%;">Número de la cria es requerido</div-->
+          </ion-item>
+        </div>
+        <div class="ion-padding-top">
+          <ion-item>
+            <ion-label position="floating">Sexo</ion-label>
+            <ion-select okText="Aceptar" cancelText="Cancelar" [(ngModel)]="model.sexo" (ngModelChange)="selectFinca1()">
+              <ion-select-option value="Macho">Macho</ion-select-option>
+              <ion-select-option value="Hembra">Hembra</ion-select-option>
+            </ion-select>
+            <!--div *ngIf="requiredFinca1" style="color:red;font-size: 80%;">Sexo es requerido</div-->
+          </ion-item>
+        </div>
+        <div class="ion-padding-top">
+          <ion-item>
+            <ion-label position="floating">Raza</ion-label>
+            <ion-select okText="Aceptar" cancelText="Cancelar" [(ngModel)]="model.razaId" (ngModelChange)="selectFinca()">
+              <ion-select-option *ngFor="let item of arrayRaza" value="{{item.codigo}}">{{item.nombre}}</ion-select-option>
+            </ion-select>
+            <!--div *ngIf="requiredFinca" style="color:red;font-size: 80%;">Raza es requerido</div-->
+          </ion-item>
+        </div>
+        <div class="ion-padding-top">
+          <ion-item>
+            <ion-label  position="floating">Fecha de parto</ion-label>
+            <!--ion-input [(ngModel)]="model.fecha" (click)="openDatePicker()"></ion-input-->
+            <ion-datetime [(ngModel)]="model.fecha"  displayFormat="'DD-MM-YYYY"></ion-datetime>
+          </ion-item>
+        </div>
+        <div class="ion-padding-top">
+          <ion-item style="display: flex;flex-direction: row;justify-content: center;">
+            <ion-checkbox color="primary" [(ngModel)]="temp" (ionChange)="updateTemp()"></ion-checkbox> 
+            <div style="width: 3px;"></div>
+            <ion-label>Temporal</ion-label>
+          </ion-item>
+        </div>
+        <div class="ion-padding-bottom line-divider"></div>
+        <!--div class="ion-padding-top">
+          <ion-button (click)="saveData()" expand="block">Aceptar</ion-button>
+        </div-->
+      </ion-col>
+      <ion-col class="ion-align-self-center" size-md="6" size-lg="5" size-xs="12">
+        <div class="ion-padding-top">
+          <ion-button (click)="presentAlertPositivo()" expand="block" [disabled]="model.codigoMadre == null || model.codigoCria == null || requiredFinca || requiredFinca1 || model.fecha == null">Positivo</ion-button>
+        </div>
+        <div class="ion-padding-top">
+          <ion-button (click)="presentAlertNegativo()" expand="block" [disabled]="model.codigoMadre == null || model.codigoCria == null || requiredFinca || requiredFinca1 || model.fecha == null">Negativo</ion-button>
+        </div>
+        <div class="ion-padding-top">
+          <ion-button (click)="cancelar()" expand="block">Cancelar</ion-button>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

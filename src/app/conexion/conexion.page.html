@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/login"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Conexión</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid class="ion-padding">
+    <ion-row class="ion-justify-content-center">
+      <ion-col class="ion-align-self-center" size-md="6" size-lg="5" size-xs="12">
+        <div class="ion-padding-top">
+          <div class="ion-padding-top">
+            <ion-item>
+              <ion-label  position="floating">Protocolo</ion-label>
+              <ion-input [(ngModel)]="protocolo"></ion-input>
+            </ion-item>
+          </div>
+          <ion-item>
+            <ion-label position="floating">Dirección</ion-label>
+            <ion-input  [(ngModel)]="direccion"></ion-input>
+          </ion-item>
+        </div>
+        <div class="ion-padding-top">
+          <ion-item>
+            <ion-label position="floating">Puerto</ion-label>
+            <ion-input  [(ngModel)]="puerto" type="number"></ion-input>
+          </ion-item>
+        </div>
+        <div class="ion-padding-bottom line-divider"></div>
+        <div class="ion-padding-top">
+          <ion-button (click)="conexion()" expand="block">Aceptar</ion-button>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

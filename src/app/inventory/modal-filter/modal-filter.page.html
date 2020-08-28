@@ -1,0 +1,64 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Filtrar datos</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <ion-grid>
+    <ion-row>
+      <ion-col size-xs="12">
+        <div>
+          <ion-item>
+            <ion-label position="floating">Número del animal</ion-label>
+            <ion-input [(ngModel)]="data.number" type="text"></ion-input>
+            <!--ion-list *ngIf="filter">
+              <ion-item *ngFor="let res of arrayResult" (click)="addCodigo(res.animal_codigo)">{{res.animal_codigo}}</ion-item>
+            </ion-list-->
+          </ion-item>
+        </div>
+        <div class="ion-padding-top">
+          <ion-item>
+            <ion-label position="floating">Sexo</ion-label>
+            <ion-select okText="Aceptar" cancelText="Cancelar" [(ngModel)]="data.genero">
+              <ion-select-option value="Hembra">Hembra</ion-select-option>
+              <ion-select-option value="Macho">Macho</ion-select-option>
+              <!--ion-select-option value="3">Ambos</ion-select-option-->
+            </ion-select>
+          </ion-item>
+        </div>
+        <div class="ion-padding-top">
+          <ion-item>
+            <ion-label position="floating">Raza</ion-label>
+            <ion-select okText="Aceptar" cancelText="Cancelar" [(ngModel)]="data.raza">
+              <ion-select-option *ngFor="let item of arrayRaza" value="{{item.codigo}}">{{item.nombre}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </div>
+        <div class="ion-padding-bottom line-divider"></div>
+        <div class="ion-hide-md-up">
+          <div class="ion-padding-top">
+            <ion-button expand="block" (click)="buscar()">Buscar</ion-button>
+          </div>
+          <div >
+            <ion-button expand="block" (click)="limpiar()">Limpiar filtros</ion-button>
+          </div>
+          <div >
+            <ion-button (click)="closeModal()" expand="block">Cancelar</ion-button>
+          </div>
+        </div>
+        <div class="ion-hide-sm-down ">
+          <div class="ion-padding-top ion-float-start">
+            <ion-button (click)="buscar()">Buscar</ion-button>
+            <ion-button (click)="limpiar()">Limpiar filtros</ion-button>
+            <ion-button (click)="closeModal()">Cancelar</ion-button>
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

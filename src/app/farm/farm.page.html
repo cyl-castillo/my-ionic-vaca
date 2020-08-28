@@ -1,0 +1,65 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Ingreso a finca</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid class="ion-padding">
+    <!--ion-row>
+      <ion-col class="ion-align-self-center" size-md="6" size-lg="5" size-xs="12">
+        <ion-item>
+          <ion-label position="floating">Número del animal</ion-label>
+          <ion-input [(ngModel)]="model.animal_codigo" type="number" autocorrect="on" autofocus="on" clearInput="true" clearOnEdit="true" inputmode="text" placeholder="Número de la cría" required="true"></ion-input>
+          <ion-icon (click)="searchData(animal_codigo)" name="search" color="primary" slot="end"></ion-icon>
+        </ion-item>
+      </ion-col>
+    </ion-row-->
+    <ion-row class="ion-justify-content-center">
+      <ion-col class="ion-align-self-center" size-md="6" size-lg="5" size-xs="12">
+        <div class="ion-padding-top">
+          <ion-item>
+            <ion-label position="floating">Número del animal</ion-label>
+            <ion-input [(ngModel)]="model.animal_codigo" (ngModelChange)="searchData(model.animal_codigo)" type="number" autocorrect="on" autofocus="on" clearInput="true" clearOnEdit="true" inputmode="text"></ion-input>
+            <!--div *ngIf="animal_codigo" style="color:red;font-size: 80%;">Número del animal es requerido</div-->
+            <!--ion-icon (click)="searchData(animal.animal_codigo)" name="search" color="primary" slot="end"></ion-icon-->
+            <ion-list *ngIf="filter">
+              <ion-item *ngFor="let res of arrayResult" (click)="addCodigo(res.animal_codigo)">{{res.animal_codigo}}</ion-item>
+            </ion-list>
+          </ion-item>
+        </div>
+        <div class="ion-padding-top">
+          <ion-item>
+            <ion-label position="floating">Finca</ion-label>
+            <ion-select okText="Aceptar" cancelText="Cancelar" [(ngModel)]="model.fincaId" (ngModelChange)="onFincaSelectChange($event)">
+              <ion-select-option *ngFor="let item of arrayFinca" value="{{item.idfinca}}">{{item.nombre}}</ion-select-option>
+            </ion-select>
+            <!--div *ngIf="requiredFinca" style="color:red;font-size: 80%;">Finca es requerido</div-->
+          </ion-item>
+        </div>
+        <div class="ion-padding-top">
+          <ion-item>
+            <ion-label position="floating">Lote</ion-label>
+            <ion-select okText="Aceptar" cancelText="Cancelar" [(ngModel)]="model.loteId" (ngModelChange)="lotes(event)">
+              <ion-select-option *ngFor="let item of arrayLote" value="{{item.idLote}}">{{item.nombre}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </div>
+        <div class="ion-padding-top">
+          <ion-item>
+            <ion-label  position="floating">Fecha</ion-label>
+            <!--ion-input [(ngModel)]="model.fecha" (click)="openDatePicker()"></ion-input-->
+            <ion-datetime [(ngModel)]="model.fecha"  displayFormat="'DD-MM-YYYY"></ion-datetime>
+          </ion-item>
+        </div>
+        <div class="ion-padding-bottom line-divider"></div>
+        <div class="ion-padding-top">
+          <ion-button (click)="saveData()" expand="block">Aceptar</ion-button>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
